@@ -21,8 +21,8 @@ class App(customtkinter.CTk):
     self.header_text_logo = customtkinter.CTkLabel(master=self.header_frame, text='LIP-SYNC', width=10, height=10, font=('Open Sans', 18, 'bold'))
     self.header_text_logo.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
 
-    self.header_btn = customtkinter.CTkButton(master=self.header_frame, text='Generate Sync Video', fg_color=PRIMARY_COLOR_2, hover_color=PRIMARY_COLOR_2, font=('Open Sans', 14), command=generate)
-    self.header_btn.pack(side='right', padx=20, ipadx=5, pady=20, ipady=5)
+    self.header_btn = customtkinter.CTkButton(master=self.header_frame, text='Generate Sync Video', fg_color=PRIMARY_COLOR_2, hover_color=PRIMARY_COLOR_3, text_color='#fff', font=('Open Sans', 15, 'bold'), corner_radius=20, command=generate)
+    self.header_btn.pack(side='right', padx=20, ipadx=15, pady=20, ipady=10)
 
     # content frame
     self.content_frame = customtkinter.CTkFrame(self, width=width, height=height, bg_color=SECONDARY_COLOR, fg_color=SECONDARY_COLOR)
