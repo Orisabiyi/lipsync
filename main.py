@@ -1,32 +1,33 @@
 import customtkinter
-
 from logic import *
+from color import *
 
-# app instance
-app = customtkinter.CTk()
+class App(customtkinter.CTk):
+  def __init__(self):
+    super().__init__()
 
-# system screen size
-width = app.winfo_screenwidth()
-height = app.winfo_screenheight()
-custom_size = str(width) + 'x' + str(height)
+    # generating size based on user screen
+    width = self.winfo_screenwidth()
+    height = self.winfo_screenheight()
+    custom_size = str(width) + 'x' + str(height)
+    
+    self.title('Lip Sync')
+    self.geometry(custom_size)
 
-# frame title
-app.geometry(custom_size)
-app.title('Lip Sync')
+    # header frame
+    self.header_frame = customtkinter.CTkFrame(self, width=width, bg_color=PRIMARY_COLOR, fg_color=PRIMARY_COLOR)
+    self.header_frame.pack(side='top', fill='x', expand=False, pady=0, padx=0)
 
-# first frame for title
-title_frame = customtkinter.CTkFrame(master=app, width=width, bg_color='#880808', fg_color='#880808')
-title_frame.pack(side='top', fill='x', expand=False, pady=0, padx=0)
+    self.header_text_logo = customtkinter.CTkLabel(master=self.header_frame, text='LIP-SYNC', width=10, height=10, font=('Open Sans', 18, 'bold'))
+    self.header_text_logo.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
 
-title_text = customtkinter.CTkLabel(master=title_frame, text='LIP-SYNC', width=10, height=10, font=('Open Sans', 18, 'bold'))
-title_text.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
+    self.header_btn = customtkinter.CTkButton(master=self.header_frame, text='Generate Sync Video', fg_color=PRIMARY_COLOR_2, hover_color=PRIMARY_COLOR_2, font=('Open Sans', 14), command=generate)
+    self.header_btn.pack(side='right', padx=20, ipadx=5, pady=20, ipady=5)
 
-button = customtkinter.CTkButton(master=title_frame, text='Generate Sync Video', fg_color='#CC5500', hover_color='#CC5500', font=('Open Sans', 14), command=generate)
-button.pack(side='right', padx=20, ipadx=5, pady=20, ipady=5)
-
-# second frame
-list_frame = customtkinter.CTkFrame(master=app, width=width, height=height, bg_color='#B9B2B2', fg_color='#B9B2B2')
-list_frame.pack()
+    # content frame
+    self.content_frame = customtkinter.CTkFrame(self, width=width, height=height, bg_color=SECONDARY_COLOR, fg_color=SECONDARY_COLOR)
+    self.content_frame.pack()
 
 
+app = App()
 app.mainloop()
