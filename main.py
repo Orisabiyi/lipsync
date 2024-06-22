@@ -26,7 +26,7 @@ class App(customtkinter.CTk):
     self.header_text_logo = customtkinter.CTkLabel(self.header_frame, text='LIP-SYNC', width=10, height=10, font=font_18)
     self.header_text_logo.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
 
-    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color='#fff', font=font_14, corner_radius=20, command=generate)
+    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color=NEUTRAL_COLOR_1, font=font_14, corner_radius=20, command=generate)
     self.header_btn.pack(side='right', padx=20, pady=20, ipadx=5, ipady=5)
 
     # content frame
@@ -60,7 +60,7 @@ class App(customtkinter.CTk):
     self.canvas.bind('<Configure>', configure_canvas_width)
 
     # Now, you can add your content to self.scrollable_frame instead of self.content_frame
-    self.welcome__label = customtkinter.CTkLabel(self.content_frame, text='Welcome to Lip Sync, Click the generate video button to sync a video to audio.', text_color='#000', font=font_14)
+    self.welcome__label = customtkinter.CTkLabel(self.content_frame, text='Welcome to Lip Sync, Click the generate video button to sync a video to audio.', text_color=NEUTRAL_COLOR, font=font_14)
     self.welcome__label.pack(padx=10, pady=20)
     
 
