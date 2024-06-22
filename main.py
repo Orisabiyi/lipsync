@@ -3,6 +3,8 @@ import customtkinter
 from logic import *
 from color import *
 
+from wel_screen import Welcome
+
 class App(customtkinter.CTk):
   def __init__(self):
     super().__init__()
@@ -64,6 +66,6 @@ class App(customtkinter.CTk):
     self.welcome__label.pack(padx=10, pady=20)
     
 
-
-app = App()
-app.mainloop()
+if __name__ == "__main__":
+  app = App()
+  app.mainloop()
