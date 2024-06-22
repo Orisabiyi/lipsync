@@ -11,6 +11,10 @@ class App(customtkinter.CTk):
     width = self.winfo_screenwidth()
     height = self.winfo_screenheight()
     custom_size = str(width) + 'x' + str(height)
+
+    # fonts
+    font_14 = ('Open Sans', 14, 'bold')
+    font_18 = ('Open Sans', 18, 'bold')
     
     self.title('Lip Sync')
     self.geometry(custom_size)
@@ -19,10 +23,10 @@ class App(customtkinter.CTk):
     self.header_frame = customtkinter.CTkFrame(self, width=width, bg_color=PRIMARY_COLOR, fg_color=PRIMARY_COLOR)
     self.header_frame.pack(side='top', fill='x', expand=False, pady=0, padx=0)
 
-    self.header_text_logo = customtkinter.CTkLabel(self.header_frame, text='LIP-SYNC', width=10, height=10, font=('Open Sans', 18, 'bold'))
+    self.header_text_logo = customtkinter.CTkLabel(self.header_frame, text='LIP-SYNC', width=10, height=10, font=font_18)
     self.header_text_logo.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
 
-    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color='#fff', font=('Open Sans', 14, 'bold'), corner_radius=20, command=generate)
+    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color='#fff', font=font_14, corner_radius=20, command=generate)
     self.header_btn.pack(side='right', padx=20, pady=20, ipadx=5, ipady=5)
 
     # content frame
@@ -56,8 +60,8 @@ class App(customtkinter.CTk):
     self.canvas.bind('<Configure>', configure_canvas_width)
 
     # Now, you can add your content to self.scrollable_frame instead of self.content_frame
-    self.content_no_label = customtkinter.CTkLabel(self.content_frame, text='NO HISTORY YET, CLICK THE GENERATE BUTTON TO GENERATE A VIDEO', text_color='#000', font=('Open Sans', 16, 'bold'))
-    self.content_no_label.pack(padx=10, pady=20)
+    self.welcome__label = customtkinter.CTkLabel(self.content_frame, text='Welcome to Lip Sync, Click the generate video button to sync a video to audio.', text_color='#000', font=font_14)
+    self.welcome__label.pack(padx=10, pady=20)
     
 
 
