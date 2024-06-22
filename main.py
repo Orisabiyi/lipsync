@@ -3,7 +3,6 @@ import customtkinter
 from logic import *
 from color import *
 
-from wel_screen import Welcome
 
 class App(customtkinter.CTk):
   def __init__(self):
@@ -21,6 +20,9 @@ class App(customtkinter.CTk):
     self.title('Lip Sync')
     self.geometry(custom_size)
 
+    def edit():
+       pass
+
     # header frame
     self.header_frame = customtkinter.CTkFrame(self, width=width, bg_color=PRIMARY_COLOR, fg_color=PRIMARY_COLOR)
     self.header_frame.pack(side='top', fill='x', expand=False, pady=0, padx=0)
@@ -28,7 +30,7 @@ class App(customtkinter.CTk):
     self.header_text_logo = customtkinter.CTkLabel(self.header_frame, text='LIP-SYNC', width=10, height=10, font=font_18)
     self.header_text_logo.pack(side='left', padx=20, ipadx=5, pady=20, ipady=10)
 
-    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color=NEUTRAL_COLOR_1, font=font_14, corner_radius=20, command=generate)
+    self.header_btn = customtkinter.CTkButton(self.header_frame, text='Generate Video', fg_color=PRIMARY_COLOR_3, hover_color=PRIMARY_COLOR_2, text_color=NEUTRAL_COLOR_1, font=font_14, corner_radius=20, command=edit)
     self.header_btn.pack(side='right', padx=20, pady=20, ipadx=5, ipady=5)
 
     # content frame
