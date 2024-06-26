@@ -47,6 +47,12 @@ class App(customtkinter.CTk):
 
   def edit(self):
       self.history_parent_frame.pack_forget()
+
+      self.setting = customtkinter.CTkFrame(self, width=self.width / 2, height=self.height, fg_color=PRIMARY_COLOR_3)
+      self.setting.pack(side='left', expand=True)
+
+      self.upload = customtkinter.CTkFrame(self, width=self.width / 2, height=self.height)
+      self.upload.pack(side='right', expand=True)
     
 
 # if __name__ == "__main__":
