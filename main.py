@@ -45,13 +45,13 @@ class App(customtkinter.CTk):
 
        # settings param
        self.model_param = customtkinter.CTkComboBox(self.settings, values=['wav2lip', 'wav2lip-gan'], font=self.font_14, width=self.width*0.3, height=30)
-       self.model_param.pack(side='top')
+       self.model_param.pack(side='top', pady=20, padx=20)
 
        self.static_param = customtkinter.CTkCheckBox(self.settings, text='static - take the first frame of the video', font=self.font_14)
        self.static_param.pack(side='left')
 
-       self.fps_param = customtkinter.CTkSlider(self.settings, )
-       self.fps_param.pack(side='left', pady=10)
+       self.fps_param = customtkinter.CTkSlider(self.settings)
+       self.fps_param.pack(side='left')
 
 
     # parent default frame
