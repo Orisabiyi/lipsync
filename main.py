@@ -5,6 +5,10 @@ from color import *
 
 
 class App(customtkinter.CTk):
+
+  def slider_value(self, value):
+         self.label.configure(text=f"Value: {value}")
+
   def __init__(self):
     super().__init__()
 
@@ -21,37 +25,46 @@ class App(customtkinter.CTk):
     self.geometry(self.custom_size)
 
     def edit():
-       self.history_parent_frame.pack_forget()
+      self.history_parent_frame.pack_forget()
 
-       # parent frame
-       self.parent_frame = customtkinter.CTkFrame(self, width=self.width*0.7, height=self.height)
-       self.parent_frame.pack(side='left', expand=True)
-       self.parent_frame.update()
+      # parent frame
+      self.parent_frame = customtkinter.CTkFrame(self, width=self.width*0.7, height=self.height)
+      self.parent_frame.pack(side='left', fill='both', expand=True)
 
-       self.parent_frame_width = self.parent_frame.winfo_width()
+      self.parent_frame_width = self.parent_frame.winfo_width()
 
-       # video frame
-       self.video_frame = customtkinter.CTkFrame(self.parent_frame, width=self.parent_frame_width, height=(self.height * 0.8), bg_color='gray', fg_color='gray')
-       self.video_frame.pack(side='top', fill='both')
+      # video frame
+      self.video_frame = customtkinter.CTkFrame(self.parent_frame, width=self.parent_frame_width, height=(self.height * 0.8), bg_color='gray', fg_color='gray')
 
-       # audio frame
-       self.audio_progress = customtkinter.CTkProgressBar(self.parent_frame, width=self.parent_frame_width, height=(self.height * 0.1))
-       self.audio_progress.pack(side='bottom')
-       self.audio_progress.set(0)
+      self.video_frame.pack(side='top', fill='both')
 
-       # setting
-       self.settings = customtkinter.CTkFrame(self, width=self.width*0.3, height=self.height)
-       self.settings.pack(side='top', fill='both', expand=True)
 
-       # settings param
-       self.model_param = customtkinter.CTkComboBox(self.settings, values=['wav2lip', 'wav2lip-gan'], font=self.font_14, width=self.width*0.3, height=30)
-       self.model_param.pack(side='top', pady=20, padx=20)
+      # audio frame
+      self.audio_progress = customtkinter.CTkProgressBar(self.parent_frame, width=self.parent_frame_width, height=(self.height * 0.1))
+      self.audio_progress.pack(side='bottom')
+      self.audio_progress.set(0)
 
-       self.static_param = customtkinter.CTkCheckBox(self.settings, text='static - take the first frame of the video', font=self.font_14)
-       self.static_param.pack(side='left')
+      # setting
+      self.settings = customtkinter.CTkFrame(self, width=self.width*0.3, height=self.height, bg_color='white', fg_color=NEUTRAL_COLOR)
 
-       self.fps_param = customtkinter.CTkSlider(self.settings)
-       self.fps_param.pack(side='left')
+      self.settings.pack(side='top', fill='both', expand=True, ipadx=20, ipady=10)
+
+
+      # settings param
+      self.model_param = customtkinter.CTkComboBox(self.settings, values=['wav2lip', 'wav2lip-gan'], font=self.font_14, width=300, height=30)
+
+      self.model_param.pack(side='top', pady=(20, 0), padx=(20, 0), anchor='w')
+
+
+      self.static_param = customtkinter.CTkCheckBox(self.settings, text='static - take the first frame of the video', font=self.font_14, width=300)
+      self.static_param.pack(side='top', pady=(20, 0), padx=(20, 0), anchor='w')
+
+      self.label = customtkinter.CTkLabel(self.settings, text='Value: 0', font=self.font_14)
+      self.label.pack(side='top', pady=(20, 0), padx=(20, 0), anchor='w')
+
+      self.fps_param = customtkinter.CTkSlider(self.settings, from_=0, to=20, command=self.slider_value)
+      self.fps_param.pack(side='top', pady=(20, 0), padx=(20, 0), anchor='w')
+      self.fps_param.set(0)
 
 
     # parent default frame
