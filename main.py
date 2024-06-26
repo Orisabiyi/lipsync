@@ -21,10 +21,21 @@ class App(customtkinter.CTk):
     self.geometry(custom_size)
 
     def edit():
-       pass
+       self.history_parent_frame.pack_forget()
 
+       # video frame
+       self.video_frame = customtkinter.CTkFrame(self, width=(width * 2/3), height=(height * 2/3))
+       self.video_frame.pack(side='left')
+
+       # audio frame
+       self.audio_frame = customtkinter.CTk
+
+
+    # parent default frame
+    self.history_parent_frame = customtkinter.CTkFrame(self, width=width, height=height)
+    self.history_parent_frame.pack(side='top', fill='both', expand=True)
     # header frame
-    self.header_frame = customtkinter.CTkFrame(self, width=width, bg_color=PRIMARY_COLOR, fg_color=PRIMARY_COLOR)
+    self.header_frame = customtkinter.CTkFrame(self.history_parent_frame, width=width, bg_color=PRIMARY_COLOR, fg_color=PRIMARY_COLOR)
     self.header_frame.pack(side='top', fill='x', expand=False, pady=0, padx=0)
 
     self.header_text_logo = customtkinter.CTkLabel(self.header_frame, text='LIP-SYNC', width=10, height=10, font=font_18)
@@ -34,7 +45,7 @@ class App(customtkinter.CTk):
     self.header_btn.pack(side='right', padx=20, pady=20, ipadx=5, ipady=5)
 
     # content frame
-    self.canvas = customtkinter.CTkCanvas(self)
+    self.canvas = customtkinter.CTkCanvas(self.history_parent_frame)
     self.canvas.pack(side='left', fill='both', expand=True)
 
     self.scrollbar = Scrollbar(self, orient=VERTICAL)
