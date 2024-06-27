@@ -156,7 +156,7 @@ class App(customtkinter.CTk):
       self.file_name_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
 
       # Preview label for image or video
-      self.preview_label = customtkinter.CTkLabel(self.upload, text="Preview will appear here", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=500, height=200)
+      self.preview_label = customtkinter.CTkLabel(self.upload, text="Preview will appear here", text_color=PRIMARY_COLOR, corner_radius=10, width=500, height=200)
       self.preview_label.pack(anchor='w', padx=(20, 20), pady=(20, 0))
 
       self.open_image_video = customtkinter.CTkButton(self.upload, text='Click to upload image or video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.open_video_image_dialog)
@@ -203,13 +203,13 @@ class App(customtkinter.CTk):
 
   def display_preview(self, file_path):
     # Determine if the file is an image or video based on its extension
-    if file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
-        # Display image preview
-        self.preview_label.configure(text="")
+    if file_path.lower().endswith(('.jpg', '.jpeg', '.png')):    
         img = Image.open(file_path)
         img.thumbnail((1000, 200))  # Resize for preview
         img_preview = ImageTk.PhotoImage(img)
-        self.preview_label.configure(image=img_preview)
+
+        # Display image preview
+        self.preview_label.configure(image=img_preview, text='')
         self.preview_label.image = img_preview  # Keep a reference
     elif file_path.lower().endswith(('.mp4', '.avi')):
         # Display video preview (first frame)
@@ -221,7 +221,7 @@ class App(customtkinter.CTk):
             img = Image.fromarray(frame)
             img.thumbnail((1000, 200), Image.ANTIALIAS)  # Resize for preview
             img_preview = ImageTk.PhotoImage(img)
-            self.preview_label.configure(image=img_preview)
+            self.preview_label.configure(image=img_preview, text='')
             self.preview_label.image = img_preview  # Keep a reference
         cap.release()
 
