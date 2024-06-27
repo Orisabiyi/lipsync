@@ -152,7 +152,8 @@ class App(customtkinter.CTk):
       self.upload.pack_propagate(flag=False)
 
       # open image or video
-      self.file_name_label = customtkinter.CTkLabel(self.upload, text="upload a video/image file", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=self.width / 2)
+      self.file_name_label = customtkinter.CTkLabel(self.upload, text="Display File path here", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=self.width / 2)
+      self.file_name_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
 
       # Preview label for image or video
       self.preview_label = customtkinter.CTkLabel(self.upload, text="Preview will appear here", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=500, height=200)
@@ -162,7 +163,9 @@ class App(customtkinter.CTk):
       self.open_image_video.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
 
       # open audio
-      self.file_audio_label = customtkinter.CTkLabel(self.upload, text="upload an audio file", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=self.width / 2)
+      self.file_audio_label = customtkinter.CTkLabel(self.upload, text="selected audio path here", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=self.width / 2)
+      self.file_audio_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
+
 
       self.open_audio = customtkinter.CTkButton(self.upload, text='Click to upload image or video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.open_audio_dialog)
       self.open_audio.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
@@ -175,15 +178,15 @@ class App(customtkinter.CTk):
       )
 
       file_obj = customtkinter.filedialog.askopenfile(title='Select files', filetypes=file_types)
+      file_path = file_obj.name
 
       if file_obj:
-        file_path = file_obj.name
         self.file_name_label.configure(text=f"Selected: {file_path}")
         self.display_preview(file_path)
       else:
           self.file_name_label.configure(text="No file selected")
+          self.display_preview('')
 
-      self.file_name_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
 
   def open_audio_dialog(self):
       file_types = (
@@ -197,7 +200,6 @@ class App(customtkinter.CTk):
       else:
           self.file_audio_label.configure(text="No file selected")
 
-      self.file_audio_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
 
   def display_preview(self, file_path):
     # Determine if the file is an image or video based on its extension
