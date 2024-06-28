@@ -51,100 +51,182 @@ class App(customtkinter.CTk):
   def edit(self):
       self.history_parent_frame.pack_forget()
 
-      self.setting = customtkinter.CTkFrame(self, width=self.width / 2, height=self.height, fg_color=SECONDARY_COLOR)
+      self.setting = customtkinter.CTkScrollableFrame(self, width=self.width / 2, height=self.height, fg_color=SECONDARY_COLOR)
       self.setting.pack(side='left', fill='both', expand=True)
 
       # model frame
       self.model_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
       self.model_frame.pack(side='top', pady=(20, 0), padx=20)
-      self.model_frame.pack_propagate(flag=False)
+      self.model_frame.grid_propagate(flag=False)
 
-      self.model_text = customtkinter.CTkLabel(self.model_frame, text='Select Model')
-      self.model_text.pack(anchor='w', padx=(20, 0))
+      self.model_text = customtkinter.CTkLabel(self.model_frame, text='Model Version')
+      self.model_text.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
-      self.model_select = customtkinter.CTkComboBox(self.model_frame, values=['wav2lip', 'wav2lip-gan'])
-      self.model_select.pack(anchor='w', padx=(20, 0))
+      self.model_select = customtkinter.CTkComboBox(self.model_frame, values=['wav2lip', 'wav2lip_GAN'])
+      self.model_select.grid(sticky='w', padx=(20, 0), row=1, column=0)
+
+      self.model_quality_text = customtkinter.CTkLabel(self.model_frame, text='Model Quality')
+      self.model_quality_text.grid(sticky='w', padx=(20, 0), row=0, column=1)
+
+      self.model_quality_select = customtkinter.CTkComboBox(self.model_frame, values=['Improved', 'Fast', 'Enhanced'])
+      self.model_quality_select.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
       # static frame
       self.static_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
       self.static_frame.pack(side='top', pady=(20, 0), padx=20)
-      self.static_frame.pack_propagate(flag=False)
-
-      self.static_text = customtkinter.CTkLabel(self.static_frame, text='Take First Frame of Video')
-      self.static_text.pack(anchor='w', padx=(20, 0))
+      self.static_frame.grid_propagate(flag=False)
 
       self.static = customtkinter.CTkCheckBox(self.static_frame, text='Static', checkbox_height=20, checkbox_width=20)
-      self.static.pack(anchor='w', padx=(20, 0))
+      self.static.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=0)
 
-      # fps and padding frame
-      self.fps_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
-      self.fps_frame.pack(side='top', pady=(20, 0), padx=20)
-      self.fps_frame.pack_propagate(flag=False)
+      self.rotate = customtkinter.CTkCheckBox(self.static_frame, text='Rotate', checkbox_height=20, checkbox_width=20)
+      self.rotate.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=1)
 
-      self.fps_text = customtkinter.CTkLabel(self.fps_frame, text='Frames Per Second')
-      self.fps_text.pack(anchor='w', padx=(20, 0))
+      self.smooth = customtkinter.CTkCheckBox(self.static_frame, text='Smooth', checkbox_height=20, checkbox_width=20)
+      self.smooth.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=2)
 
-      self.fps_entry = customtkinter.CTkEntry(self.fps_frame, placeholder_text='2')
-      self.fps_entry.pack(anchor='w', padx=(20, 0))
+      self.super_resolution = customtkinter.CTkCheckBox(self.static_frame, text='Super Resolution', checkbox_height=20, checkbox_width=20)
+      self.super_resolution.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=3)
 
-      # fps and padding frame
-      self.padding_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
-      self.padding_frame.pack(side='top', pady=(20, 0), padx=20)
-      self.padding_frame.grid_propagate(flag=False)
+      # padding
+      self.padface = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
+      self.padface.pack(side='top', pady=(20, 0), padx=20)
+      self.padface.grid_propagate(flag=False)
 
-      self.padding_text = customtkinter.CTkLabel(self.padding_frame, text='Video Padding')
-      self.padding_text.grid(row=0, column=0, padx=(20, 0), sticky='w')
+      self.padding_top = customtkinter.CTkLabel(self.padface, text='Padding Top')
+      self.padding_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
-      self.padding_entry_text_1 = customtkinter.CTkLabel(self.padding_frame, text='up')
-      self.padding_entry_text_1.grid(row=1, column=0, padx=(20, 0), sticky='w')
+      self.pad_entry_1 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
-      self.padding_entry_1 = customtkinter.CTkEntry(self.padding_frame, placeholder_text='0')
-      self.padding_entry_1.grid(row=1, column=1, sticky='w')
+      self.padding_bottom = customtkinter.CTkLabel(self.padface, text='Padding Bottom')
+      self.padding_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
-      self.padding_entry_text_2 = customtkinter.CTkLabel(self.padding_frame, text='down')
-      self.padding_entry_text_2.grid(row=1, column=2, padx=(10, 0), sticky='w')
+      self.pad_entry_2 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
-      self.padding_entry_2 = customtkinter.CTkEntry(self.padding_frame, placeholder_text='0')
-      self.padding_entry_2.grid(row=1, column=3, sticky='w')
+      self.padding_left = customtkinter.CTkLabel(self.padface, text='Padding Left')
+      self.padding_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
-      # self.padding = customtkinter.CTkLabel(self.fps_padding_frame, text='Padding')
-      # self.padding.pack(anchor='w', padx=(20, 0))
+      self.pad_entry_3 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
-      # self.padding_entries = customtkinter.CTkFrame(self.fps_padding_frame, width=self.width / 2)
-      # self.padding_entries.pack(anchor='w', padx=(20, 0))
+      self.padding_right = customtkinter.CTkLabel(self.padface, text='Padding Right')
+      self.padding_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
-      # self.pad_entry_1 = customtkinter.CTkEntry(self.padding_entries, placeholder_text='0')
-      # self.pad_entry_1.grid(row=0, column=0)
+      self.pad_entry_4 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
 
-      # rotate frame
-      self.rotate_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
-      self.rotate_frame.pack(side='top', pady=(20, 0), padx=20)
-      self.rotate_frame.pack_propagate(flag=False)
+      # facemask
+      self.facemask = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
+      self.facemask.pack(side='top', pady=(20, 0), padx=20)
+      self.facemask.grid_propagate(flag=False)
 
-      self.rotate_text = customtkinter.CTkLabel(self.rotate_frame, text='Rotate the image or video')
-      self.rotate_text.pack(anchor='w', padx=(20, 0))
+      self.facemask_top = customtkinter.CTkLabel(self.facemask, text='Facemask Top')
+      self.facemask_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
-      self.rotate_entry = customtkinter.CTkEntry(self.rotate_frame, placeholder_text='90deg')
-      self.rotate_entry.pack(anchor='w', padx=(20, 0))
+      self.face_entry_1 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
-      # smooth and resize frame
-      self.smooth_resize = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
-      self.smooth_resize.pack(side='top', pady=(20, 0), padx=20)
-      self.smooth_resize.pack_propagate(flag=False)
+      self.facemask_bottom = customtkinter.CTkLabel(self.facemask, text='Facemask Bottom')
+      self.facemask_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
-      # smooth section
-      self.smooth_text = customtkinter.CTkLabel(self.smooth_resize, text='Smooth')
-      self.smooth_text.pack(anchor='w', padx=(20, 0))
+      self.face_entry_2 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
-      self.smooth_check = customtkinter.CTkCheckBox(self.smooth_resize, text='Smooth', checkbox_height=20, checkbox_width=20)
-      self.smooth_check.pack(anchor='w', padx=(20, 0))
+      self.facemask_left = customtkinter.CTkLabel(self.facemask, text='Facemask Left')
+      self.facemask_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
-      # resize factor
-      self.resize = customtkinter.CTkLabel(self.smooth_resize, text='Resize Factor - Reduce resolution by the factor')
-      self.resize.pack(anchor='w', padx=(20, 0))
+      self.face_entry_3 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
-      self.resize_entry = customtkinter.CTkEntry(self.smooth_resize)
-      self.resize_entry.pack(anchor='w', padx=(20, 0))
+      self.facemask_right = customtkinter.CTkLabel(self.facemask, text='Facemask Right')
+      self.facemask_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
+
+      self.face_entry_4 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
+
+      # boundingbox
+      self.boundingbox = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
+      self.boundingbox.pack(side='top', pady=(20, 0), padx=20)
+      self.boundingbox.grid_propagate(flag=False)
+
+      self.bounding_top = customtkinter.CTkLabel(self.boundingbox, text='Bounding Top')
+      self.bounding_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
+
+      self.bound_entry_1 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
+
+      self.bounding_bottom = customtkinter.CTkLabel(self.boundingbox, text='Bounding Bottom')
+      self.bounding_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
+
+      self.bound_entry_2 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
+
+      self.bounding_left = customtkinter.CTkLabel(self.boundingbox, text='Bounding Left')
+      self.bounding_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
+
+      self.bound_entry_3 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
+
+      self.bounding_right = customtkinter.CTkLabel(self.boundingbox, text='Bounding Right')
+      self.bounding_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
+
+      self.bound_entry_4 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
+
+      # crop
+      self.crop = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
+      self.crop.pack(side='top', pady=(20, 0), padx=20)
+      self.crop.grid_propagate(flag=False)
+
+      self.crop_top = customtkinter.CTkLabel(self.crop, text='Crop Top')
+      self.crop_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
+
+      self.crop_entry_1 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
+
+      self.crop_bottom = customtkinter.CTkLabel(self.crop, text='Crop Bottom')
+      self.crop_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
+
+      self.crop_entry_2 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
+
+      self.crop_left = customtkinter.CTkLabel(self.crop, text='Crop Left')
+      self.crop_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
+
+      self.crop_entry_3 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
+
+      self.crop_right = customtkinter.CTkLabel(self.crop, text='Crop Right')
+      self.crop_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
+
+      self.crop_entry_4 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
+
+      # output, upscaler, frames-per-sec
+      self.output_up_frame = customtkinter.CTkFrame(self.setting, width=self.width / 2, height=80, fg_color=PRIMARY_COLOR)
+      self.output_up_frame.pack(side='top', pady=(20, 0), padx=20)
+      self.output_up_frame.grid_propagate(flag=False)
+
+      self.output_height_text = customtkinter.CTkLabel(self.output_up_frame, text='Output Height')
+      self.output_height_text.grid(sticky='w', padx=(20, 0), row=0, column=0)
+
+      self.output_height = customtkinter.CTkComboBox(self.output_up_frame, values=['full resolution', 'half resolution'])
+      self.output_height.grid(sticky='w', padx=(20, 0), row=1, column=0)
+
+      self.upscaler_text = customtkinter.CTkLabel(self.output_up_frame, text='Upscaler')
+      self.upscaler_text.grid(sticky='w', padx=(20, 0), row=0, column=1)
+
+      self.upscaler = customtkinter.CTkComboBox(self.output_up_frame, values=['gfpgan', 'Restoreformer'])
+      self.upscaler.grid(sticky='w', padx=(20, 0), row=1, column=1)
+      
+      self.fps_text = customtkinter.CTkLabel(self.output_up_frame, text='Frames Per Second')
+      self.fps_text.grid(sticky='w', padx=(20, 0), row=0, column=2)
+
+      self.frames_per_second = customtkinter.CTkEntry(self.output_up_frame)
+      self.frames_per_second.insert(0, '25')
+      self.frames_per_second.grid(sticky='w', padx=(20, 0), row=1, column=2)
 
       # upload frame
       self.upload = customtkinter.CTkFrame(self, width=self.width / 2, height=self.height, fg_color=SECONDARY_COLOR)
@@ -202,7 +284,6 @@ class App(customtkinter.CTk):
 
 
   def display_preview(self, file_path):
-    # Determine if the file is an image or video based on its extension
     if file_path.lower().endswith(('.jpg', '.jpeg', '.png')):    
         img = Image.open(file_path)
         img.thumbnail((1000, 200))  # Resize for preview
