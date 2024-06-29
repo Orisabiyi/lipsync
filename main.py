@@ -76,16 +76,20 @@ class App(customtkinter.CTk):
       self.static_frame.pack(side='top', pady=(20, 0), padx=20)
       self.static_frame.grid_propagate(flag=False)
 
-      self.static = customtkinter.CTkCheckBox(self.static_frame, text='Static', checkbox_height=20, checkbox_width=20)
+      self.check_static = customtkinter.BooleanVar(value=False)
+      self.static = customtkinter.CTkCheckBox(self.static_frame, text='Static', checkbox_height=20, checkbox_width=20, variable=self.check_static)
       self.static.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=0)
 
-      self.rotate = customtkinter.CTkCheckBox(self.static_frame, text='Rotate', checkbox_height=20, checkbox_width=20)
+      self.check_rotate = customtkinter.BooleanVar(value=False)
+      self.rotate = customtkinter.CTkCheckBox(self.static_frame, text='Rotate', checkbox_height=20, checkbox_width=20, variable=self.check_rotate)
       self.rotate.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=1)
 
-      self.smooth = customtkinter.CTkCheckBox(self.static_frame, text='Smooth', checkbox_height=20, checkbox_width=20)
+      self.check_smooth = customtkinter.BooleanVar(value=False)
+      self.smooth = customtkinter.CTkCheckBox(self.static_frame, text='Smooth', checkbox_height=20, checkbox_width=20, variable=self.check_smooth)
       self.smooth.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=2)
 
-      self.super_resolution = customtkinter.CTkCheckBox(self.static_frame, text='Super Resolution', checkbox_height=20, checkbox_width=20)
+      self.check_res = customtkinter.BooleanVar(value=True)
+      self.super_resolution = customtkinter.CTkCheckBox(self.static_frame, text='Super Resolution', checkbox_height=20, checkbox_width=20, variable=self.check_res)
       self.super_resolution.grid(sticky='w', padx=(20, 0), pady=(20, 0), row=0, column=3)
 
       # padding
@@ -248,9 +252,11 @@ class App(customtkinter.CTk):
       self.file_audio_label = customtkinter.CTkLabel(self.upload, text="selected audio path here", fg_color=PRIMARY_COLOR, text_color=NEUTRAL_COLOR_1, corner_radius=10, width=self.width / 2)
       self.file_audio_label.pack(anchor='w', padx=(20, 20), pady=(10, 0), ipady=10,)
 
-
       self.open_audio = customtkinter.CTkButton(self.upload, text='Click to upload image or video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.open_audio_dialog)
       self.open_audio.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
+
+      self.submit_btn = customtkinter.CTkButton(self.upload, text='Sync Video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.invoke)
+      self.submit_btn.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
       
 
   def open_video_image_dialog(self):
@@ -305,6 +311,10 @@ class App(customtkinter.CTk):
             self.preview_label.configure(image=img_preview, text='')
             self.preview_label.image = img_preview  # Keep a reference
         cap.release()
+
+  def invoke(self):
+      print('Processing...')
+      print('Synced Video')
 
 # if __name__ == "__main__":
 app = App()
