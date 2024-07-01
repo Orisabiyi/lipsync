@@ -101,24 +101,28 @@ class App(customtkinter.CTk):
       self.padding_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
       self.pad_entry_1 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_1.insert(0, '0')
       self.pad_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
       self.padding_bottom = customtkinter.CTkLabel(self.padface, text='Padding Bottom')
       self.padding_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
       self.pad_entry_2 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_2.insert(0, '0')
       self.pad_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
       self.padding_left = customtkinter.CTkLabel(self.padface, text='Padding Left')
       self.padding_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
       self.pad_entry_3 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_3.insert(0, '0')
       self.pad_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
       self.padding_right = customtkinter.CTkLabel(self.padface, text='Padding Right')
       self.padding_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
       self.pad_entry_4 = customtkinter.CTkEntry(self.padface, placeholder_text='0', width=120)
+      self.pad_entry_4.insert(0, '0')
       self.pad_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
 
       # facemask
@@ -126,25 +130,27 @@ class App(customtkinter.CTk):
       self.facemask.pack(side='top', pady=(20, 0), padx=20)
       self.facemask.grid_propagate(flag=False)
 
-      self.facemask_top = customtkinter.CTkLabel(self.facemask, text='Facemask Top')
+      self.facemask_top = customtkinter.CTkLabel(self.facemask, text='Size')
       self.facemask_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
       self.face_entry_1 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_1.insert(0, '2.5')
       self.face_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
-      self.facemask_bottom = customtkinter.CTkLabel(self.facemask, text='Facemask Bottom')
+      self.facemask_bottom = customtkinter.CTkLabel(self.facemask, text='Feathering')
       self.facemask_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
       self.face_entry_2 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_2.insert(0, '2')
       self.face_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
-      self.facemask_left = customtkinter.CTkLabel(self.facemask, text='Facemask Left')
+      self.facemask_left = customtkinter.CTkLabel(self.facemask, text='Mouth Tracking')
       self.facemask_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
-      self.face_entry_3 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_3 = customtkinter.CTkComboBox(self.facemask, values=['True', 'False'])
       self.face_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
-      self.facemask_right = customtkinter.CTkLabel(self.facemask, text='Facemask Right')
+      self.facemask_right = customtkinter.CTkLabel(self.facemask, text='Debug Mask')
       self.facemask_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
       self.face_entry_4 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
@@ -329,8 +335,7 @@ class App(customtkinter.CTk):
       face = self.file_name_label.cget('text').replace('Selected: ', '')
       audio = self.file_audio_label.cget('text')
 
-      print(version, quality, static, rotate, smooth, super_resolution, padding, box, crop, upscaler, frames_per_second)
-      print(face, audio)
+      self.invoke(version=version, quality=quality, static=static, rotate=rotate, smooth=smooth, super_resolution=super_resolution, padding=padding, box=box, crop=crop, upscaler=upscaler, frames_per_second=frames_per_second, face=face, audio=audio)
 
 # if __name__ == "__main__":
 app = App()
