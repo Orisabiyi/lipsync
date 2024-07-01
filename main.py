@@ -255,7 +255,7 @@ class App(customtkinter.CTk):
       self.open_audio = customtkinter.CTkButton(self.upload, text='Click to upload image or video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.open_audio_dialog)
       self.open_audio.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
 
-      self.submit_btn = customtkinter.CTkButton(self.upload, text='Sync Video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.invoke)
+      self.submit_btn = customtkinter.CTkButton(self.upload, text='Sync Video', width=self.width / 2, fg_color=PRIMARY_COLOR, hover_color=PRIMARY_COLOR, corner_radius=10, command=self.get_settings)
       self.submit_btn.pack(anchor='w', padx=(20, 20), pady=(20, 0), ipady=10)
       
 
@@ -312,7 +312,7 @@ class App(customtkinter.CTk):
             self.preview_label.image = img_preview  # Keep a reference
         cap.release()
 
-  def invoke(self):
+  def get_settings(self):
       version = self.model_select.get()
       quality = self.model_quality_select.get()
       static = self.check_static.get()
