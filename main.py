@@ -3,15 +3,11 @@ import customtkinter
 
 from PIL import Image, ImageTk
 import cv2
-from logic import *
+from validate_values import *
 from color import *
 
 
 class App(customtkinter.CTk):
-
-  def slider_value(self, value):
-         self.label.configure(text=f"Value: {value}")
-
   def __init__(self):
     super().__init__()
 
@@ -153,7 +149,7 @@ class App(customtkinter.CTk):
       self.facemask_right = customtkinter.CTkLabel(self.facemask, text='Debug Mask')
       self.facemask_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
-      self.face_entry_4 = customtkinter.CTkEntry(self.facemask, placeholder_text='0', width=120)
+      self.face_entry_4 = customtkinter.CTkComboBox(self.facemask, values=['True', 'False'], width=120)
       self.face_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
 
       # boundingbox
@@ -165,24 +161,28 @@ class App(customtkinter.CTk):
       self.bounding_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
       self.bound_entry_1 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_1.insert(0, '-1')
       self.bound_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
       self.bounding_bottom = customtkinter.CTkLabel(self.boundingbox, text='Bounding Bottom')
       self.bounding_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
       self.bound_entry_2 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_2.insert(0, '-1')
       self.bound_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
       self.bounding_left = customtkinter.CTkLabel(self.boundingbox, text='Bounding Left')
       self.bounding_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
       self.bound_entry_3 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_3.insert(0, '-1')
       self.bound_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
       self.bounding_right = customtkinter.CTkLabel(self.boundingbox, text='Bounding Right')
       self.bounding_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
       self.bound_entry_4 = customtkinter.CTkEntry(self.boundingbox, placeholder_text='0', width=120)
+      self.bound_entry_4.insert(0, '-1')
       self.bound_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
 
       # crop
@@ -194,24 +194,28 @@ class App(customtkinter.CTk):
       self.crop_top.grid(sticky='w', padx=(20, 0), row=0, column=0)
 
       self.crop_entry_1 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_1.insert(0, '0')
       self.crop_entry_1.grid(sticky='w', padx=(20, 0), row=1, column=0)
 
       self.crop_bottom = customtkinter.CTkLabel(self.crop, text='Crop Bottom')
       self.crop_bottom.grid(sticky='w', padx=(20, 0), row=0, column=1)
 
       self.crop_entry_2 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_2.insert(0, '-1')
       self.crop_entry_2.grid(sticky='w', padx=(20, 0), row=1, column=1)
 
       self.crop_left = customtkinter.CTkLabel(self.crop, text='Crop Left')
       self.crop_left.grid(sticky='w', padx=(20, 0), row=0, column=3)
 
       self.crop_entry_3 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_3.insert(0, '0')
       self.crop_entry_3.grid(sticky='w', padx=(20, 0), row=1, column=3)
 
       self.crop_right = customtkinter.CTkLabel(self.crop, text='Crop Right')
       self.crop_right.grid(sticky='w', padx=(20, 0), row=0, column=4)
 
       self.crop_entry_4 = customtkinter.CTkEntry(self.crop, placeholder_text='0', width=120)
+      self.crop_entry_4.insert(0, '-1')
       self.crop_entry_4.grid(sticky='w', padx=(20, 0), row=1, column=4)
 
       # output, upscaler, frames-per-sec
@@ -317,8 +321,11 @@ class App(customtkinter.CTk):
             self.preview_label.configure(image=img_preview, text='')
             self.preview_label.image = img_preview  # Keep a reference
         cap.release()
-
+  
   def get_settings(self):
+      # validate values first before accepting and processing
+      validate_values(self=self)
+
       version = self.model_select.get()
       quality = self.model_quality_select.get()
       static = self.check_static.get()
@@ -326,16 +333,34 @@ class App(customtkinter.CTk):
       smooth = self.check_smooth.get()
       super_resolution =self.check_res.get()
 
-      padding = {'top': self.pad_entry_1.get(), 'bottom': self.pad_entry_2.get(), 'left': self.pad_entry_3.get(), 'right': self.pad_entry_4.get()}
-      box = {'top': self.bound_entry_1.get(), 'bottom': self.bound_entry_2.get(), 'left': self.bound_entry_3.get(), 'right': self.bound_entry_4.get()}
-      crop = {'top': self.crop_entry_1.get(), 'bottom': self.crop_entry_2.get(), 'left': self.crop_entry_3.get(), 'right': self.crop_entry_4.get()}
+      padding = {'top': self.pad_1, 'bottom': self.pad_2, 'left': self.pad_3, 'right': self.pad_4}
+
+      box = {'top': self.bound_1, 'bottom': self.bound_2, 'left': self.bound_3, 'right': self.bound_4}
+
+      crop = {'top': self.crop_1, 'bottom': self.crop_2, 'left': self.crop_3, 'right': self.crop_4}
+
+      if (self.face_entry_3.get() == 'True'): mouth_tracking = True 
+      else: mouth_tracking = False
+
+      if (self.face_entry_4.get() == 'True'): debug_mask = True 
+      else: debug_mask = False
+
+      face_mask = {'size': self.face_1, 'feathering': self.face_2, 'mouth_tracking': mouth_tracking, 'debug_mask': debug_mask}
+
       upscaler = self.upscaler.get()
+
       frames_per_second = self.frames_per_second.get()
 
       face = self.file_name_label.cget('text').replace('Selected: ', '')
       audio = self.file_audio_label.cget('text')
 
-      self.invoke(version=version, quality=quality, static=static, rotate=rotate, smooth=smooth, super_resolution=super_resolution, padding=padding, box=box, crop=crop, upscaler=upscaler, frames_per_second=frames_per_second, face=face, audio=audio)
+      print(version, quality, static, rotate, smooth, super_resolution, padding, box, crop, upscaler, frames_per_second, face, audio, face_mask)
+
+      # self.invoke(version=version, quality=quality, static=static, rotate=rotate, smooth=smooth, super_resolution=super_resolution, padding=padding, box=box, crop=crop, upscaler=upscaler, frames_per_second=frames_per_second, face=face, audio=audio)
+
+  def invoke(self):
+      pass
+
 
 # if __name__ == "__main__":
 app = App()
