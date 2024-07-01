@@ -313,8 +313,24 @@ class App(customtkinter.CTk):
         cap.release()
 
   def invoke(self):
-      print('Processing...')
-      print('Synced Video')
+      version = self.model_select.get()
+      quality = self.model_quality_select.get()
+      static = self.check_static.get()
+      rotate = self.check_rotate.get()
+      smooth = self.check_smooth.get()
+      super_resolution =self.check_res.get()
+
+      padding = {'top': self.pad_entry_1.get(), 'bottom': self.pad_entry_2.get(), 'left': self.pad_entry_3.get(), 'right': self.pad_entry_4.get()}
+      box = {'top': self.bound_entry_1.get(), 'bottom': self.bound_entry_2.get(), 'left': self.bound_entry_3.get(), 'right': self.bound_entry_4.get()}
+      crop = {'top': self.crop_entry_1.get(), 'bottom': self.crop_entry_2.get(), 'left': self.crop_entry_3.get(), 'right': self.crop_entry_4.get()}
+      upscaler = self.upscaler.get()
+      frames_per_second = self.frames_per_second.get()
+
+      face = self.file_name_label.cget('text').replace('Selected: ', '')
+      audio = self.file_audio_label.cget('text')
+
+      print(version, quality, static, rotate, smooth, super_resolution, padding, box, crop, upscaler, frames_per_second)
+      print(face, audio)
 
 # if __name__ == "__main__":
 app = App()
