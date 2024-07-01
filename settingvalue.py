@@ -1,3 +1,4 @@
+from time import sleep
 from validate_values import validate_values
 
 def get_settings(self):
@@ -31,5 +32,15 @@ def get_settings(self):
 
       face = self.file_name_label.cget('text').replace('Selected: ', '')
       audio = self.file_audio_label.cget('text')
+
+      # go to default
+      self.submit_btn.configure(text='')
+      self.submit_btn.configure(text='Loading...')
+      sleep(4.0)
+
+      self.setting.pack_forget()
+      self.upload.pack_forget()
+
+      self.history_parent_frame.pack(side='top', fill='both', expand=True)
 
       print(version, quality, static, rotate, smooth, super_resolution, padding, box, crop, upscaler, frames_per_second, face, audio, face_mask)
